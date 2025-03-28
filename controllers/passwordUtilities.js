@@ -1,20 +1,6 @@
 const crypto = require('crypto')
 
-function genPassword(password){
-    const salt = crypto.randomBytes(32).toString('hex')
-    const genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
-
-    return {
-        hash: genHash,
-        salt: salt
-    }
-}
-
-function validatePassword(password, hash, salt){
-    const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
-    return hash === hashVerify
-}
-
+/* REGISTER HANDLERS */
 function comparePasswords(password, secondPassword){
     if(password.length !== secondPassword.length){
         return false
@@ -25,6 +11,23 @@ function comparePasswords(password, secondPassword){
         }
     }
     return true
+}
+
+function genPassword(password){
+    console.log(password)
+    const salt = crypto.randomBytes(32).toString('hex')
+    const genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
+
+    return {
+        salt: salt,
+        hash: genHash
+    }
+}
+
+/* LOGIN HANDLER */
+function validatePassword(password, hash, salt){
+    const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
+    return hash === hashVerify
 }
 
 module.exports = {genPassword, validatePassword, comparePasswords}

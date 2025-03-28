@@ -1,0 +1,32 @@
+body, :root{
+    margin: 0;
+    padding:0;
+}
+body{
+    display: grid;
+    
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+    .userContainer{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 20vw;
+    }
+
+        .username{
+            font-size: 1.5rem;
+            margin-left: -2rem;
+        }
+        .profileImg{
+            height: 5vh;
+            border-radius: 2.5vh;
+        }
+        .logout{
+            text-decoration: none;
+            color:black;
+        }

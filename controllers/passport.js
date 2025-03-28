@@ -8,16 +8,17 @@ const customFields = { //insurance policy.. make sure the login inputs are recog
     password: 'password'
 }
 
-const verifyLogin = (username, password, secondPassword, done) => {
+const verifyLogin = (username, password, done) => {
         pool.query('SELECT * FROM userdata WHERE username=$1', [username])
             .then((result) => {
                 const user = result.rows[0]
+                console.log(user)
                 if(!user){//invalid username
                     return done(null, false)
                 }
 
                 const isValid = passwordUtilities.validatePassword(password, user.hash, user.salt)
-                
+                console.log(isValid)
                 if(isValid){
                     return done(null, user) //valid credentials
                 }
@@ -27,7 +28,6 @@ const verifyLogin = (username, password, secondPassword, done) => {
             .catch((error) => {
                 done(error)
             })
-  
 }
 
 passport.serializeUser((user, done) => { 
@@ -49,6 +49,5 @@ passport.deserializeUser(async (id, done) => {
 //implement custom "verifyLogin" strategy
 const strategy = new LocalStrategy(customFields, verifyLogin)
 passport.use(strategy)
-
 
 module.exports = passport

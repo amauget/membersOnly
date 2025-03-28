@@ -8,7 +8,7 @@ async function verifyRegistration({username, password, secondPassword}){
         if(passwordUtilities.comparePasswords(password, secondPassword) === true){
     
             if(await usernameAvailable(username) === true){//username is available
-                const {hash, salt} = passwordUtilities.genPassword('password') 
+                const {hash, salt} = passwordUtilities.genPassword(password) 
 
                 await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [username, hash, salt])
                 

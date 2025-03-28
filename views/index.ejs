@@ -3,11 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/index.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>home</h1>
-    <a href="/register" class="registerLink">Register</a>
-    <a href="/login" class="loginLink">Log in</a>
+    <div class="header">
+        <h1>Members Only Clubhouse</h1>
+        <%if(username.length === 0){%>
+            <a href="/register" class="registerLink">Register</a>
+            <a href="/login" class="loginLink">Log in</a>
+        <%}%>
+        <%if(username.length > 0){%>
+            <div class="userContainer">
+                <img class='profileImg' src="/profile.png" alt="">    
+                <h3 class="username"><%=username%></h3>
+                <a class='logout' href="/logout">Logout</a>
+            </div>
+        <%}%>
+    
+    </div>
+    <div class="page">
+        <h2 class="subTitle">Current Rooms</h2>
+    </div>
+  
 </body>
 </html>

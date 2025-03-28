@@ -9,7 +9,8 @@ router.get('/', (req, res, next) => {
 
 router.post('/', async (req, res, next) =>{
     const [registered, message] = await verifyRegistration(req.body)
-    console.log(registered)
+    /* CHANGE ID GENERATION TO SOMETHING MORE VERBOSE! */
+
     if(registered === true){
         res.status(200).redirect('/')
     }

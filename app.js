@@ -29,7 +29,7 @@ app.set('veiw', path.join(__dirname, 'views'))
 app.use(expressSession({
     store: new pgSession({
         pool: pool,
-        tablename: 'TBD',    /* !!!!!! ADD TABLE NAME !!!!!!! */
+        tablename: 'session',  // see -- node_modules/connect-pg-simple/table.sql -- for "create table" requirements
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
