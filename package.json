@@ -15,6 +15,10 @@
   "scripts": {
     "live": "node --watch app.js",
     "lint": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "testLive": "nodemon --exec 'jest' --watchAll"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }

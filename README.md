@@ -12,3 +12,4 @@ Installs/libraries:
     connect-pg-simple
     .env
     eslint
+    nodemon (live jest testing)

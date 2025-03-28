@@ -1,6 +1,6 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const pool = require('../db/pool')
+const pool = require('../../db/pool')
 const passwordUtilities = require('./passwordUtilities')
 
 const customFields = { //insurance policy.. make sure the login inputs are recognized.

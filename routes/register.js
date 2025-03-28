@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 const passport = require('passport')
-const verifyRegistration = require('../controllers/PostHandlers/handleRegister')
+const { verifyRegistration } = require('../controllers/PostHandlers/handleRegister')
 
 router.get('/', (req, res, next) => {
     res.render('register', {message: ''})

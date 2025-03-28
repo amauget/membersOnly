@@ -1,16 +1,25 @@
-const passwordUtilities = require('../passwordUtilities')
+const passwordUtilities = require('../AuthHandlers/passwordUtilities')
 const pool = require('../../db/pool')
+const htmlEscape = require('./htmlEscape')
+const { use } = require('passport')
+const compareChars = require('./compareChars')
 
 async function verifyRegistration({username, password, secondPassword}){
     try{
+        const cleanedUsername = htmlEscape(username) //escape dangerous characters
+        const cleanedPassword = htmlEscape(password) //only escape the arg that is going to hash 
+
+        const usernameMatch = compareChars(username, cleanedUsername) //prevents usernames w/ dangerous chars
+        const passwordMatch = compareChars(cleanedPassword, secondPassword)
+
         let message = ''
         let registered = false
-        if(passwordUtilities.comparePasswords(password, secondPassword) === true){
-    
-            if(await usernameAvailable(username) === true){//username is available
-                const {hash, salt} = passwordUtilities.genPassword(password) 
 
-                await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [username, hash, salt])
+        if(passwordMatch === true && usernameMatch === true){
+            if(await usernameAvailable(cleanedUsername) === true && validChars(username, cleanedUsername)){//username is available
+                const {hash, salt} = passwordUtilities.genPassword(cleanedPassword) 
+
+                await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [cleanedUsername, hash, salt]) //use cleanedUsername to avoid unforseen flaws that allow cross scripting
                 
                 registered = true //account has been registered.
             }
@@ -18,8 +27,11 @@ async function verifyRegistration({username, password, secondPassword}){
                 message = `"${username}" already has an account.`
             }
         }
-        else{
+        else if(passwordMatch === false){
             message = 'Entered passwords do not match.'
+        }
+        else if(usernameMatch === false){
+            message = 'Invalid Username'
         }
         return [registered, message]
         
@@ -35,4 +47,7 @@ async function usernameAvailable(username){
     return result.rows.length > 0 ? false : true
 }
 
-module.exports = verifyRegistration
+function validChars(username, cleanedUsername){
+    return username.length === cleanedUsername
+}
+module.exports = {verifyRegistration, validChars}

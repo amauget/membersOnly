@@ -1,17 +1,6 @@
 const crypto = require('crypto')
 
-/* REGISTER HANDLERS */
-function comparePasswords(password, secondPassword){
-    if(password.length !== secondPassword.length){
-        return false
-    }
-    for(let i = 0; i < password.length; i++){
-        if(password[i] !== secondPassword[i]){
-            return false
-        }
-    }
-    return true
-}
+/* REGISTER HANDLER */
 
 function genPassword(password){
     console.log(password)
@@ -30,4 +19,4 @@ function validatePassword(password, hash, salt){
     return hash === hashVerify
 }
 
-module.exports = {genPassword, validatePassword, comparePasswords}
+module.exports = {genPassword, validatePassword}

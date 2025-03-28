@@ -1,13 +1,12 @@
 const express = require('express')
-require('./controllers/passport')
 
 //My objects
 const app = express()
 const router = require('./routes/0_router')
-const passport = require('./controllers/passport')
+const passport = require('./controllers/AuthHandlers/passport')
 const exp = require('constants') /* ????? */
 
-//Framwork/Libraries
+//Frameworks/Libraries
 const path = require('path')
 const pool = require('./db/pool')
 const expressSession = require('express-session')

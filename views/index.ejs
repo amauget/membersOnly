@@ -15,8 +15,8 @@
         <%}%>
         <%if(username.length > 0){%>
             <div class="userContainer">
-                <img class='profileImg' src="/profile.png" alt="">    
-                <h3 class="username"><%=username%></h3>
+                <a href="/profile"><img class='profileImg' src="/profile.png" alt="">  </a>  
+                <a href="/profile" class="username"><%=username%></a>
                 <a class='logout' href="/logout">Logout</a>
             </div>
         <%}%>

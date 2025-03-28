@@ -17,10 +17,12 @@ body{
         align-items: center;
         width: 20vw;
     }
-
         .username{
             font-size: 1.5rem;
+            font-weight: bold;
             margin-left: -2rem;
+            text-decoration: none;
+            color: black;
         }
         .profileImg{
             height: 5vh;
