@@ -1,4 +1,4 @@
-const comparePasswords = require('../comparePasswords')
+const {comparePasswords} = require('../passwordUtilities')
 
 describe('it correctly checks if passwords match', () => {
     it('returns false for same length, mismatched strings', () => {
