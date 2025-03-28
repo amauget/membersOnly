@@ -1,33 +1,38 @@
 const passwordUtilities = require('../passwordUtilities')
+const pool = require('../../db/pool')
 
-async function verifyRegistration(username, password, secondPassword, done){
+async function verifyRegistration({username, password, secondPassword}){
     try{
+        let message = ''
+        let registered = false
         if(passwordUtilities.comparePasswords(password, secondPassword) === true){
-            const usernameTaken = await queryUsername(username)
     
-            if(usernameTaken){//username is taken
-                return done(null, false)
-            }
-            const hashData = passwordUtilities.genPassword(password)
-            const hash = hashData.hash
-            const salt = hashData.salt
+            if(await usernameAvailable(username) === true){//username is available
+                const {hash, salt} = passwordUtilities.genPassword('password') 
 
-            await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [username, hash, salt])
-            
-            return done(null, true) //account has been created.
+                await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [username, hash, salt])
+                
+                registered = true //account has been registered.
+            }
+            else{
+                message = `"${username}" already has an account.`
+            }
         }
         else{
-            return done(null, false)
+            message = 'Entered passwords do not match.'
         }
+        return [registered, message]
+        
     }
     catch(err){
-        return done(null, err)
+        return err
     }
     
 }
 
-async function queryUsername(username){
+async function usernameAvailable(username){
     const result = await pool.query('SELECT * FROM userdata WHERE username=$1', [username])
-    return result.rows.length > 0 ? true : false
+    return result.rows.length > 0 ? false : true
 }
+
 module.exports = verifyRegistration

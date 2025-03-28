@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1 class="title">Register</h1>
+    <h3 class="message" style="color: red;"><%=message%></h3>
     <form action="/register" method="post" class="register">
         <label for="username">Username</label>
         <input type="text" name="username" id="username">
@@ -14,8 +15,8 @@
         <label for="password">Password</label>
         <input type="password" name='password' id="password">
 
-        <label for="2ndPassword">Re-Enter Password</label>
-        <input type="password" name="2ndPassword" id="2ndPassword">
+        <label for="secondPassword">Re-Enter Password</label>
+        <input type="password" name="secondPassword" id="secondPassword">
 
         <button class="submit">Submit</button>
     </form>

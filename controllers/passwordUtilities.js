@@ -5,12 +5,12 @@ function genPassword(password){
     const genHash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
 
     return {
-        salt: salt,
-        hash: genHash
+        hash: genHash,
+        salt: salt
     }
 }
 
-function validPassword(password, hash, salt){
+function validatePassword(password, hash, salt){
     const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
     return hash === hashVerify
 }
@@ -27,4 +27,4 @@ function comparePasswords(password, secondPassword){
     return true
 }
 
-module.exports = {comparePasswords}
+module.exports = {genPassword, validatePassword, comparePasswords}

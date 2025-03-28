@@ -3,7 +3,7 @@ require('./controllers/passport')
 
 //My objects
 const app = express()
-const router = require('./routes/0_main')
+const router = require('./routes/0_router')
 const passport = require('./controllers/passport')
 const exp = require('constants') /* ????? */
 
