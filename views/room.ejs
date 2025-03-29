@@ -10,11 +10,12 @@
     <h1>Room Name</h1>
     <!-- post data -->
     <%if(user){%>
-        <form action="/roomPost">
-            <input type="text" class="user" value=<%=user%> style='display:none'>
-            <label for="comment">Post a Comment to this Thread</label>
-            <textarea name="comment" id="comment" placeholder="Post your thoughts"></textarea>
-            <button class="submitComment">Post</button>
+        <form action="/room" method="post">
+            <!-- needs values for roomname, user, date, content, reply(bool) -->
+            <input type="text" name="reply" value="false" style='display:none'>
+            <label for="content">Post a Comment to this Thread</label>
+            <textarea name="content" id="content" placeholder="Post your thoughts"></textarea>
+            <button class="submitContent">Post</button>
         </form>
 
     <%}%>

@@ -1,6 +1,6 @@
 const passwordUtilities = require('../AuthHandlers/passwordUtilities')
 const pool = require('../../db/pool')
-const htmlEscape = require('./htmlEscape')
+const htmlEscape = require('./handleUnsafeChars')
 const { use } = require('passport')
 const compareChars = require('./compareChars')
 const joinDate = require('./timeStamps')
