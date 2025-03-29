@@ -43,6 +43,7 @@ passport.deserializeUser(async (id, done) => {
     catch(err){
         console.error(err)
         done(err)
+        /* ADD DOM BEHAVIOR HERE */
     }
 })
 

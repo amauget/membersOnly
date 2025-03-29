@@ -3,6 +3,7 @@ const pool = require('../../db/pool')
 const htmlEscape = require('./htmlEscape')
 const { use } = require('passport')
 const compareChars = require('./compareChars')
+const joinDate = require('./timeStamps')
 
 async function verifyRegistration({username, password, secondPassword}){
     try{
@@ -16,10 +17,10 @@ async function verifyRegistration({username, password, secondPassword}){
         let registered = false
 
         if(passwordMatch === true && usernameMatch === true){
-            if(await usernameAvailable(cleanedUsername) === true && validChars(username, cleanedUsername)){//username is available
+            if(await usernameAvailable(cleanedUsername) === true && validChars(username, cleanedUsername) === true){//username is available
                 const {hash, salt} = passwordUtilities.genPassword(cleanedPassword) 
 
-                await pool.query('INSERT INTO userData(username, hash, salt) VALUES($1, $2, $3)', [cleanedUsername, hash, salt]) //use cleanedUsername to avoid unforseen flaws that allow cross scripting
+                await pool.query('INSERT INTO userData(username, hash, salt, date) VALUES($1, $2, $3, $4)', [cleanedUsername, hash, salt, joinDate()]) //use cleanedUsername to avoid unforseen flaws that allow cross scripting
                 
                 registered = true //account has been registered.
             }
@@ -34,12 +35,10 @@ async function verifyRegistration({username, password, secondPassword}){
             message = 'Invalid Username'
         }
         return [registered, message]
-        
     }
     catch(err){
         return err
-    }
-    
+    } 
 }
 
 async function usernameAvailable(username){
@@ -48,6 +47,6 @@ async function usernameAvailable(username){
 }
 
 function validChars(username, cleanedUsername){
-    return username.length === cleanedUsername
+    return username.length === cleanedUsername.length
 }
 module.exports = {verifyRegistration, validChars}

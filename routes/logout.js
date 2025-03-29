@@ -7,6 +7,7 @@ router.get('/', (req, res, next) => {
         if (err) {
           return next(err)
         }
+      // req.session.destroy()
         res.redirect('/')
       })
 })

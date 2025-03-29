@@ -12,7 +12,7 @@ router.post('/', async (req, res, next) =>{
     /* CHANGE ID GENERATION TO SOMETHING MORE VERBOSE! */
 
     if(registered === true){
-        res.status(200).redirect('/')
+        res.status(200).send('<h1>Success!</h1> <a href="/login" class="loginLink">Click Here to Log in!</a>')
     }
     else{
         res.render('register', {message: message})

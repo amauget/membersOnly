@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/">Home</a>
+    <h1>Room Name</h1>
+    <!-- post data -->
+    <%if(user){%>
+        <form action="/roomPost">
+            <input type="text" class="user" value=<%=user%> style='display:none'>
+            <label for="comment">Post a Comment to this Thread</label>
+            <textarea name="comment" id="comment" placeholder="Post your thoughts"></textarea>
+            <button class="submitComment">Post</button>
+        </form>
+
+    <%}%>
+</body>
+</html>
