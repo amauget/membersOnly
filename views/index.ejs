@@ -24,10 +24,28 @@
     </div>
     <div class="page">
         <h2 class="subTitle">Current Rooms</h2>
-        <a href="/room">Test Room</a>
+        <form action="/room" method="get" class="rooms">
+            <input type="text" name="roomValue" class="roomValue" style="display:none">
+            <p class="roomDisplay" onclick=getRoom()>Test Room</p>
+
+        </form>
+        
     </div>
   
 </body>
+<script>
+    function getRoom(){
+        const form = document.querySelector('.rooms')
+        const roomInput = document.querySelector('.roomValue')
 
+        roomInput.value = event.target.textContent
+        form.submit()
+    }
 
+</script>
+<style>
+    .roomDisplay:hover{
+        cursor: pointer;
+    }
+</style>
 </html>

@@ -7,11 +7,21 @@
 </head>
 <body>
     <a href="/">Home</a>
-    <h1>Room Name</h1>
-    <!-- post data -->
-    <%if(user){%>
+    <h1><%=roomName%></h1>
+    <div class="discussContainer">
+        <%room.map(post =>{%>
+            <%if(!hasAccount){post.username = "Sign-in to see author"}%>
+            <div class="comment">
+                <p class="username"><%=post.username%></p>
+                <p class="time"><%=post.time%></p>
+                <p class="content"><%=post.content%></p>
+            </div>
+        <%})%>
+    </div>
+    
+    <%if(hasAccount){%>
         <form action="/room" method="post">
-            <!-- needs values for roomname, user, date, content, reply(bool) -->
+            <input type="text" name="room" value="<%= roomName %>"> <!-- add quotes to the value for the entire string to attach -->
             <input type="text" name="reply" value="false" style='display:none'>
             <label for="content">Post a Comment to this Thread</label>
             <textarea name="content" id="content" placeholder="Post your thoughts"></textarea>

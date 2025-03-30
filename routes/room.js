@@ -1,18 +1,25 @@
 const { Router } = require('express')
 const router = Router()
 const passport = require('passport')
+const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
 const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
 
-router.get('/', (req, res) => {
-    console.log(req.query)
-    res.render('room', {user: JSON.stringify(req.user)})
+router.get('/', async (req, res) => {
+    const room = await verifyRoom(req)
+    if(room){
+        const roomName = room[0].roomname
+        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: roomName})
+    }
+    else{
+        res.redirect('/error')
+    }
 })
 
 router.post('/', async (req, res) => {
-    /* NOTE FOR NEXT WEEK:
-        figure out how to securely attach room name to post requests (and adding new rooms)
-    */
-    await handleRoomPost(req, res)
+    const room = await verifyRoom(req)
+
+   console.log(req.body)
+    // await handleRoomPost(req, res)
 
 })
 

@@ -1,6 +1,6 @@
 const pool = require('../../db/pool')
 const { connect } = require('../../routes')
-const { htmlEscape } = require('./handleUnsafeChars')
+const { htmlEscape } = require('../handleUnsafeChars')
 const { postDate } = require('./timeStamps')
 
 async function handleRoomPost(req, res){
