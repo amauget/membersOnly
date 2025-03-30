@@ -1,9 +1,9 @@
 const pool = require('../../db/pool')
 const { htmlEscape } = require('../handleUnsafeChars')
 
-async function verifyRoom(req, res){
+async function verifyRoom(roomValue){
     try{
-        const roomName = htmlEscape(req.query.roomValue)
+        const roomName = htmlEscape(roomValue)
         const room = await pool.query('SELECT * FROM rooms WHERE roomname = $1', [roomName])
         return room.rows
     }

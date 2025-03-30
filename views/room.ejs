@@ -20,8 +20,7 @@
     </div>
     
     <%if(hasAccount){%>
-        <form action="/room" method="post">
-            <input type="text" name="room" value="<%= roomName %>"> <!-- add quotes to the value for the entire string to attach -->
+        <form action="/room/<%=roomName%>" method="post">
             <input type="text" name="reply" value="false" style='display:none'>
             <label for="content">Post a Comment to this Thread</label>
             <textarea name="content" id="content" placeholder="Post your thoughts"></textarea>

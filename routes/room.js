@@ -4,23 +4,27 @@ const passport = require('passport')
 const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
 const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
 
-router.get('/', async (req, res) => {
-    const room = await verifyRoom(req)
+
+router.get('/:roomValue', async (req, res) => {
+    const room = await verifyRoom(req.params.roomValue) //avoid front end DOM manipulation
     if(room){
-        const roomName = room[0].roomname
-        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: roomName})
+        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: req.params.roomValue})
     }
     else{
         res.redirect('/error')
     }
 })
 
-router.post('/', async (req, res) => {
-    const room = await verifyRoom(req)
-
-   console.log(req.body)
-    // await handleRoomPost(req, res)
-
+router.post('/:roomValue', async (req, res) => {
+    const room = await verifyRoom(req.params.roomValue)
+    if(room){
+        await handleRoomPost(req)  
+        const roomName = req.params.roomValue
+        res.redirect(`/room/${roomName}`)
+    }
+    else{
+        res.redirect('/error')
+    }
 })
 
 module.exports = router
