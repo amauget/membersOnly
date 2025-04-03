@@ -5,7 +5,7 @@ const { postDate } = require('./timeStamps')
 async function handleRoomPost(req){
     try{
         const id = crypto.randomUUID()
-        console.log(req.params)
+    
         const roomName = htmlEscape(req.params.roomValue)
         const content = htmlEscape(req.body.content)
         const reply = (req.body.reply === 'true') //converts from string to bool

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/index.css">
-    <title>Document</title>
+    <title>Home</title>
 </head>
 <body>
     <div class="header">
@@ -24,11 +24,12 @@
     </div>
     <div class="page">
         <h2 class="subTitle">Current Rooms</h2>
-        <form action="/room/Test Room" method="get" class="rooms">
-            <input type="text" name="roomValue" class="roomValue" style="display:none">
-            <p class="roomDisplay" onclick=getRoom()>Test Room</p>
-
-        </form>
+        <%rooms.map(room =>{%>
+            <a href="/room/<%=room.roomname%>"><%=room.roomname%></a>
+        <%})%>
+        
+       
+        <a href="/createRoom">Create a New Room</a>
         
     </div>
   
@@ -36,9 +37,9 @@
 <script>
     function getRoom(){
         const form = document.querySelector('.rooms')
-        const roomInput = document.querySelector('.roomValue')
+        // const roomInput = document.querySelector('.roomValue')
 
-        roomInput.value = event.target.textContent
+        // roomInput.value = event.target.textContent
         form.submit()
     }
 

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Room</title>
+</head>
+<body>
+    <h1 class="title">Create a New Room</h1>
+    <form action="/createRoom" method="post" class="createRoom">
+        <label for="roomName">Room Name:</label>
+        <input type="text" name="roomName" class="roomName">
+
+        <input type="text" name="reply" value="false" style='display:none'>
+
+        <label for="content">What's on you mind?</label>
+        <textarea name="content" id="content" placeholder="Post your thoughts"></textarea>
+        <button class="submitContent">Post</button>
+    </form>
+</body>
+</html>

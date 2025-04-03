@@ -1,4 +1,4 @@
-const htmlEscape = require('../PostHandlers/htmlEscape')
+const { htmlEscape } = require('../handleUnsafeChars')
 
 describe('It meets security protocol for input post requests', () =>{
     it('returns the unaltered argument ', () => {

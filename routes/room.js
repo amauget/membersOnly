@@ -2,13 +2,15 @@ const { Router } = require('express')
 const router = Router()
 const passport = require('passport')
 const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
+const { htmlRestore } = require('../controllers/handleUnsafeChars') 
 const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
-
+const restoreText = require('../controllers/GetHandlers/restoreText')
 
 router.get('/:roomValue', async (req, res) => {
-    const room = await verifyRoom(req.params.roomValue) //avoid front end DOM manipulation
-    if(room){
-        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: req.params.roomValue})
+    const roomResult = await verifyRoom(req.params.roomValue) //avoid front end DOM manipulation
+    if(roomResult.length > 0){
+        const room = restoreText(roomResult)
+        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: htmlRestore(req.params.roomValue)})
     }
     else{
         res.redirect('/error')
