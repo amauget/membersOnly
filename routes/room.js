@@ -3,7 +3,7 @@ const router = Router()
 const passport = require('passport')
 const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
 const { htmlRestore } = require('../controllers/handleUnsafeChars') 
-const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
+const {handleRoomPost} = require('../controllers/PostHandlers/handleRoomPost')
 const restoreText = require('../controllers/GetHandlers/restoreText')
 
 router.get('/:roomValue', async (req, res) => {
@@ -20,14 +20,18 @@ router.get('/:roomValue', async (req, res) => {
 })
 
 router.post('/:roomValue', async (req, res) => {
+
     const room = await verifyRoom(req.params.roomValue)
-    if(room){
+    const content = req.body.content
+    
+    if(room && (content.length <= 280)){
+        
         await handleRoomPost(req)  
         const roomName = req.params.roomValue
         res.redirect(`/room/${encodeURIComponent(roomName)}`)
     }
     else{
-        res.redirect('/error')
+        res.send('<h1>STATUS 403: FORBIDDEN REQUEST</h1> <a href="/" class="homeLink">Home</a>')
     }
 })
 

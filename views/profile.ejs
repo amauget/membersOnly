@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/profile.css">
     <title><%=user.username%>'s Profile</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <h1><%=posts[0].username%></h1>
-    <img src="/profile.png" alt="">
-    <h2 class="joinDate">Joined <%=user.date%></h2>
+    <a class="home" href="/">Home</a>
+    
+    <img class="profileImg" src="/profile.png" alt="">
+    <h1 class="profileUsername"><%=user.username%></h1>
     
     <h3 class="recentTitle">Recent Activity</h3>
+    <div class="recentContainer">
+        <%if(posts.length > 0){%>
+            <% posts.map(post =>{ %>
+                <div class="postContainer">
+                    <a href="/room/<%=encodeURIComponent(post.roomname)%>" class="roomname"><%= post.roomname %></a>
+                    <p class="content"><%= post.content %></p>
+                    <p class="time"><%= post.time %></p>
+                </div>
+        <% })%>
+        <%}else{%>
+            <h2 class="noPosts">No posts to show</h2>
+            <%}%>
+       
+    </div>
 
-    <%try{ posts.map(post =>{ %>
-        <div class="postContainer">
-            <h2 class="roomname"><%= post.roomname %></h2>
-            <p class="time"><%= post.time %></p>
-            <p class="content"><%= post.content %></p>
-        </div>
-    <% })}catch(err){ %>
-        <h2 class="noPosts">No posts to show</h2>
-   <% } %> 
 </body>
 </html>

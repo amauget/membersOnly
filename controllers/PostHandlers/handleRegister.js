@@ -1,9 +1,8 @@
 const passwordUtilities = require('../AuthHandlers/passwordUtilities')
 const pool = require('../../db/pool')
-const htmlEscape = require('../handleUnsafeChars')
-const { use } = require('passport')
+const { htmlEscape } = require('../handleUnsafeChars')
 const compareChars = require('./compareChars')
-const joinDate = require('./timeStamps')
+const { joinDate } = require('./timeStamps')
 
 async function verifyRegistration({username, password, secondPassword}){
     try{
@@ -19,9 +18,8 @@ async function verifyRegistration({username, password, secondPassword}){
         if(passwordMatch === true && usernameMatch === true){
             if(await usernameAvailable(cleanedUsername) === true && validChars(username, cleanedUsername) === true){//username is available
                 const {hash, salt} = passwordUtilities.genPassword(cleanedPassword) 
-
                 await pool.query('INSERT INTO userData(username, hash, salt, date) VALUES($1, $2, $3, $4)', [cleanedUsername, hash, salt, joinDate()]) //use cleanedUsername to avoid unforseen flaws that allow cross scripting
-                
+
                 registered = true //account has been registered.
             }
             else{

@@ -5,10 +5,10 @@ const verifyRegistration = require('../controllers/PostHandlers/handleRegister')
 const getUserPosts = require('../controllers/GetHandlers/getUserPosts')
 
 router.get('/:username', async (req, res, next) => {
-    console.log(req.user)
+    console.log(req.params)
     if(req.user){
         const userPosts = await getUserPosts(req.params)
-        res.render('profile', {user: req.user, posts: userPosts})
+        res.render('profile', {user: req.params, posts: userPosts})
     }
     else{
         res.redirect('/login')

@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
 const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
-const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
+const { handleRoomPost } = require('../controllers/PostHandlers/handleRoomPost')
 
 router.get('/', (req, res) =>{
     if(req.user){

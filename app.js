@@ -4,10 +4,8 @@ const express = require('express')
 const app = express()
 const router = require('./routes/0_router')
 const passport = require('./controllers/AuthHandlers/passport')
-const exp = require('constants') /* ????? */
 
 //Frameworks/Libraries
-const cleanupSessions = require('./db/cleanupSessions')
 const path = require('path')
 const pool = require('./db/pool')
 const expressSession = require('express-session')
@@ -41,7 +39,6 @@ app.use(expressSession({
 }))
 
 //session DB Cleanup
-
 setInterval(() => {
     try{
         sessionStore.pruneSessions()
@@ -50,7 +47,7 @@ setInterval(() => {
     catch(err){
         console.error('Failed to prune session db: ', err)
     }
-}, 60 * 1000)
+}, 60 * 60 * 1000)
 
 app.use(passport.session())
 

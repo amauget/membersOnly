@@ -8,6 +8,7 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) =>{
+    console.log(req.body)
     const [registered, message] = await verifyRegistration(req.body)
     /* CHANGE ID GENERATION TO SOMETHING MORE VERBOSE! */
 
