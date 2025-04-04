@@ -7,10 +7,20 @@
 </head>
 <body>
     <a href="/">Home</a>
-    <h1><%=user.username%></h1>
+    <h1><%=posts[0].username%></h1>
     <img src="/profile.png" alt="">
     <h2 class="joinDate">Joined <%=user.date%></h2>
     
     <h3 class="recentTitle">Recent Activity</h3>
+
+    <%try{ posts.map(post =>{ %>
+        <div class="postContainer">
+            <h2 class="roomname"><%= post.roomname %></h2>
+            <p class="time"><%= post.time %></p>
+            <p class="content"><%= post.content %></p>
+        </div>
+    <% })}catch(err){ %>
+        <h2 class="noPosts">No posts to show</h2>
+   <% } %> 
 </body>
 </html>

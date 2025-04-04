@@ -3,16 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/room.css">
     <title>Document</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <h1><%=roomName%></h1>
+    <a class='homeLink' href="/">Home</a>
+    <div class="header">
+        <h1>Members Only Clubhouse</h1>
+        <%if(user === undefined){%>
+            <a href="/register" class="registerLink">Register</a>
+            <a href="/login" class="loginLink">Log in</a>
+        <%}else if(user.username.length > 0){%>
+            <div class="userContainer">
+                <a href="/profile/<%=user.username%>"><img class='profileImg' src="/profile.png" alt="">  </a>  
+                <a href="/profile/<%=user.username%>" class="username"><%=user.username%></a>
+                <a class='logout' href="/logout">Logout</a>
+            </div>
+        <%}%>
+    
+    </div>
+   
+    <h1 class="roomName"><%=roomName%></h1>
     <div class="discussContainer">
         <%room.map(post =>{%>
             <%if(!hasAccount){post.username = "Sign-in to see author"}%>
             <div class="comment">
-                <p class="username"><%=post.username%></p>
+                <a class="username" href="/profile/<%=post.username%>"><%=post.username%></a>
+                <%if(hasAccount){%>
+                    <img src="/reply.png" alt="REPLY" class="reply" onclick=addReply() id='<%=post.username%>'> 
+                <%}%>
                 <p class="time"><%=post.time%></p>
                 <p class="content"><%=post.content%></p>
             </div>
@@ -20,8 +40,7 @@
     </div>
     
     <%if(hasAccount){%>
-        <form action="/room/<%=roomName%>" method="post">
-            <input type="text" name="reply" value="false" style='display:none'>
+        <form action="/room/<%=encodeURIComponent(roomName)%>" method="post">
             <label for="content">Post a Comment to this Thread</label>
             <textarea name="content" id="content" placeholder="Post your thoughts"></textarea>
             <button class="submitContent">Post</button>
@@ -29,4 +48,11 @@
 
     <%}%>
 </body>
+<script>
+    function addReply(){
+        const textbox = document.querySelector('#content')
+        console.log(event.target.id)
+        textbox.value = "@" + event.target.id
+    }
+</script>
 </html>

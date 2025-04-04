@@ -7,6 +7,7 @@ const passport = require('./controllers/AuthHandlers/passport')
 const exp = require('constants') /* ????? */
 
 //Frameworks/Libraries
+const cleanupSessions = require('./db/cleanupSessions')
 const path = require('path')
 const pool = require('./db/pool')
 const expressSession = require('express-session')
@@ -25,23 +26,33 @@ app.set('view engine', 'ejs')
 app.set('veiw', path.join(__dirname, 'views'))
 
 //Express Session
+const sessionStore = new pgSession({
+    pool: pool,
+    tablename: 'session',  // see -- node_modules/connect-pg-simple/table.sql -- for "create table" requirements
+})
+
 app.use(expressSession({
-    store: new pgSession({
-        pool: pool,
-        tablename: 'session',  // see -- node_modules/connect-pg-simple/table.sql -- for "create table" requirements
-    }),
+    store: sessionStore,
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+    cookie: { maxAge: 7 * 24 * 60 * 60 *  1000 },
     saveUninitialized: false,
     createTableIfMissing: true, //Err Handling
 }))
 
-app.use(passport.session())
+//session DB Cleanup
 
-app.use((req, res, next) => { /* !!!!!FIGURE OUT THE PURPOSE OF THIS!!!!! */
-    next()
-})
+setInterval(() => {
+    try{
+        sessionStore.pruneSessions()
+        console.log('Session Pruned')
+    }
+    catch(err){
+        console.error('Failed to prune session db: ', err)
+    }
+}, 60 * 1000)
+
+app.use(passport.session())
 
 app.use('/', router)
 

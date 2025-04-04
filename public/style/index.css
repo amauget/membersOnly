@@ -4,7 +4,6 @@ body, :root{
 }
 body{
     display: grid;
-    
 }
 .header{
     display: flex;

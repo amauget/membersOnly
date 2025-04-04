@@ -7,12 +7,14 @@ const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
 const restoreText = require('../controllers/GetHandlers/restoreText')
 
 router.get('/:roomValue', async (req, res) => {
+
     const roomResult = await verifyRoom(req.params.roomValue) //avoid front end DOM manipulation
     if(roomResult.length > 0){
-        const room = restoreText(roomResult)
-        res.render('room', {hasAccount:(req.user !== undefined), room: room, roomName: htmlRestore(req.params.roomValue)})
+        const room = restoreText(roomResult, 'content')
+        res.render('room', {hasAccount:(req.user !== undefined), user: req.user, room: room, roomName: htmlRestore(req.params.roomValue)})
     }
     else{
+
         res.redirect('/error')
     }
 })
@@ -22,7 +24,7 @@ router.post('/:roomValue', async (req, res) => {
     if(room){
         await handleRoomPost(req)  
         const roomName = req.params.roomValue
-        res.redirect(`/room/${roomName}`)
+        res.redirect(`/room/${encodeURIComponent(roomName)}`)
     }
     else{
         res.redirect('/error')

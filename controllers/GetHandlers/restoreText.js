@@ -1,8 +1,8 @@
 const { htmlRestore } = require("../handleUnsafeChars")
 
-function restoreText(data){
+function restoreText(data, key){
     for(let item of data){
-        item.content = htmlRestore(item.content)
+        item[key] = htmlRestore(item[key])
     }        
     return data
 }

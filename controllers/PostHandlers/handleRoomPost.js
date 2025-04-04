@@ -5,13 +5,11 @@ const { postDate } = require('./timeStamps')
 async function handleRoomPost(req){
     try{
         const id = crypto.randomUUID()
-    
         const roomName = htmlEscape(req.params.roomValue)
         const content = htmlEscape(req.body.content)
-        const reply = (req.body.reply === 'true') //converts from string to bool
         const username = req.user.username
 
-        await pool.query('INSERT INTO rooms(id, roomname, username, time, content, reply) VALUES($1, $2, $3, $4, $5, $6)', [id, roomName, username, postDate(), content, reply])
+        await pool.query('INSERT INTO rooms(id, roomname, username, time, content) VALUES($1, $2, $3, $4, $5)', [id, roomName, username, postDate(), content])
         return true
     }
     catch(err){

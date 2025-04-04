@@ -13,3 +13,7 @@ Installs/libraries:
     .env
     eslint
     nodemon (live jest testing)
+
+Images:
+    generic profile: Gemini AI
+    reply icon: https://www.iconfinder.com/search?q=reply

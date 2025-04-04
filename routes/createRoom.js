@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const router = Router()
-const passport = require('passport')
 const verifyRoom = require('../controllers/GetHandlers/verifyRoom')
 const handleRoomPost = require('../controllers/PostHandlers/handleRoomPost')
 
@@ -18,9 +17,9 @@ router.post('/', async (req, res) => {
     if(roomAvail){
         req.params.roomValue = req.body.roomName //refactor.. "handleRoomPost requires req.params" which is undefined here
         await handleRoomPost(req)
-        res.redirect(`/room/${req.body.roomName}`)
+
+        res.redirect(`/room/${encodeURIComponent(req.body.roomName)}`)
     }
 })
-// BUG.. RUNNING INTO ISSUES WITH ROOM NAMES THAT CONTAIN "?"
 
 module.exports = router

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/style/index.css">
     <title>Home</title>
 </head>
 <body>
@@ -15,8 +15,8 @@
         <%}%>
         <%if(username.length > 0){%>
             <div class="userContainer">
-                <a href="/profile"><img class='profileImg' src="/profile.png" alt="">  </a>  
-                <a href="/profile" class="username"><%=username%></a>
+                <a href="/profile/<%=username%>"><img class='profileImg' src="/profile.png" alt="">  </a>  
+                <a href="/profile/<%=username%>" class="username"><%=username%></a>
                 <a class='logout' href="/logout">Logout</a>
             </div>
         <%}%>
@@ -25,10 +25,9 @@
     <div class="page">
         <h2 class="subTitle">Current Rooms</h2>
         <%rooms.map(room =>{%>
-            <a href="/room/<%=room.roomname%>"><%=room.roomname%></a>
+            <a href="/room/<%=encodeURIComponent(room.roomname)%>"><%=room.roomname%></a>
         <%})%>
-        
-       
+        <!-- encodeURI converts "?" before passing to url as param -->
         <a href="/createRoom">Create a New Room</a>
         
     </div>
