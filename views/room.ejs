@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/room.css">
+    <title><%=roomName%></title>
+</head>
+<body>
+    <a class='homeLink' href="/">Home</a>
+    <div class="header">
+        <h1>Room: <%=roomName%></h1>
+        <%if(user === undefined){%>
+            <a href="/register" class="registerLink">Register</a>
+            <a href="/login" class="loginLink">Log in</a>
+        <%}else if(user.username.length > 0){%>
+            <div class="userContainer">
+                <a href="/profile/<%=user.username%>"><img class='profileImg' src="/profile.png" alt="">  </a>  
+                <a href="/profile/<%=user.username%>" class="username"><%=user.username%></a>
+                <a class='logout' href="/logout">Logout</a>
+            </div>
+        <%}%>
+    
+    </div>
+   
+    <div class="discussContainer">
+        <%room.map(post =>{%>
+            <%if(!hasAccount){post.username = "Sign-in to see author"}%>
+            <div class="comment">
+                <a class="username" href="/profile/<%=post.username%>"><img class="profileImg" src="/profile.png" alt=""><%=post.username%></a>
+                <%if(hasAccount){%>
+                    <img src="/reply.png" alt="REPLY" class="reply" onclick=addReply() id='<%=post.username%>'> 
+                <%}%>
+                <p class="time">On <%=post.time%></p>
+                <p class="content"><%=post.content%></p>
+            </div>
+        <%})%>
+    </div>
+    
+    <%if(hasAccount){%>
+        <form action="/room/<%=encodeURIComponent(roomName)%>" method="post" class="commentInput">
+            <label class="postLabel" for="content">Post a Comment to this Thread</label>
+            <textarea class="postText" name="content" id="content" placeholder="Post your thoughts" onkeydown=limitChars() onkeyup=countChars()></textarea>
+            <p class="charCounter">0/280</p>
+            <button class="submitContent">Post</button>
+        </form>
+
+    <%}%>
+</body>
+<script>
+    const textbox = document.querySelector('#content')
+
+    function addReply(){
+        textbox.value = "@" + event.target.id + ': '
+        countChars()
+    }
+
+    function limitChars(){
+        let limitReached = false
+        if(event.target.value.length >= 280 && (event.key !== 'Backspace')){
+            event.preventDefault()
+            limitReached = true
+        }
+        return limitReached
+    }
+
+    function countChars(){
+        const charCounter = document.querySelector('.charCounter')
+        charCounter.textContent = textbox.value.length + '/280'
+        console.log('then')
+        // let charCount = (event.target.value.length + 1 )
+        // charCounter.textContent = `${event.target.value.length + 1}/280`
+    }
+
+   
+</script>
+</html>

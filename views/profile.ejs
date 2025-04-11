@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="/style/profile.css">
+    <title><%=user.username%>'s Profile</title>
+</head>
+<body>
+    <a class="home" href="/">Home</a>
+    
+    <img class="profileImg" src="/profile.png" alt="">
+    <h1 class="profileUsername"><%=user.username%></h1>
+    
+    <h3 class="recentTitle">Recent Activity</h3>
+    <div class="recentContainer">
+        <%if(posts.length > 0){%>
+            <% posts.map(post =>{ %>
+                <div class="postContainer">
+                    <a href="/room/<%=encodeURIComponent(post.roomname)%>" class="roomname"><%= post.roomname %></a>
+                    <p class="content"><%= post.content %></p>
+                    <p class="time"><%= post.time %></p>
+                </div>
+        <% })%>
+        <%}else{%>
+            <h2 class="noPosts">No posts to show</h2>
+            <%}%>
+       
+    </div>
+
+</body>
+</html>

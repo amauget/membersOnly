@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/index.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="header">
+        <h1>Members Only Clubhouse</h1>
+        <%if(username.length === 0){%>
+            <a href="/register" class="registerLink">Register</a>
+            <a href="/login" class="loginLink">Log in</a>
+        <%}%>
+        <%if(username.length > 0){%>
+            <div class="userContainer">
+                <a href="/profile/<%=username%>"><img class='profileImg' src="/profile.png" alt="">  </a>  
+                <a href="/profile/<%=username%>" class="username"><%=username%></a>
+                <a class='logout' href="/logout">Logout</a>
+            </div>
+        <%}%>
+    
+    </div>
+    <div class="page">
+        <h2 class="subTitle">Current Rooms</h2>
+        <%rooms.map(room =>{%>
+            <a href="/room/<%=encodeURIComponent(room.roomname)%>"><%=room.roomname%></a>
+        <%})%>
+        <!-- encodeURI converts "?" before passing to url as param -->
+        <a href="/createRoom">Create a New Room</a>
+        
+    </div>
+  
+</body>
+<script>
+    function getRoom(){
+        const form = document.querySelector('.rooms')
+        // const roomInput = document.querySelector('.roomValue')
+
+        // roomInput.value = event.target.textContent
+        form.submit()
+    }
+
+</script>
+<style>
+    .roomDisplay:hover{
+        cursor: pointer;
+    }
+</style>
+</html>
